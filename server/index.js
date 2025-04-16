@@ -25,12 +25,13 @@ server.tool(
     },
     async (args) => {
         const { a, b } = args;
-        return [
+        return {
+            content :[
             {
                 type: "text",                           
                 text: `The sum of ${a} and ${b} is ${a + b}`
             }
-        ];
+        ]};
     }
 );
 
