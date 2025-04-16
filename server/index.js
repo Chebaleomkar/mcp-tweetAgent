@@ -1,6 +1,8 @@
 import express from "express";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
+import { createTwitterPost } from "./mcp.tool.js";
+
 import {z} from 'zod'
 
 const server = new McpServer({
@@ -30,10 +32,20 @@ server.tool(
             {
                 type: "text",                           
                 text: `The sum of ${a} and ${b} is ${a + b}`
-            }
+            } 
         ]};
     }
 );
+
+server.tool("createPost" , "Create Twitter post" , 
+    {
+        status : z.string()
+    },
+    async (arg) =>{
+        const {status} = arg;
+        return createTwitterPost(status);
+    }
+)
 
 
 app.get("/sse", async (_, res) => {
